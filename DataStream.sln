@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStream", "src\DataStream\DataStream.csproj", "{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{76371D38-1AEB-44BB-996A-15690B57F3F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{54939EEA-DB48-447D-89C2-452B6A1FFF24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStream.Tests", "tests\DataStream.Tests\DataStream.Tests.csproj", "{235F40EE-2291-45DF-AD69-09C5A5F3754E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235F40EE-2291-45DF-AD69-09C5A5F3754E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235F40EE-2291-45DF-AD69-09C5A5F3754E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235F40EE-2291-45DF-AD69-09C5A5F3754E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235F40EE-2291-45DF-AD69-09C5A5F3754E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF635E38-C49E-4A22-A21C-4CD78CEC1A7E} = {76371D38-1AEB-44BB-996A-15690B57F3F8}
+		{235F40EE-2291-45DF-AD69-09C5A5F3754E} = {54939EEA-DB48-447D-89C2-452B6A1FFF24}
+	EndGlobalSection
+EndGlobal
