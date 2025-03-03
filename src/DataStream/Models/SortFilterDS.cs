@@ -30,5 +30,26 @@ namespace DataStream.Models
             _propertyName = propertyName;
             _ascending = ascending;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (SortFilterDS)obj;
+            return PropertyName == other.PropertyName &&
+                   Ascending == other.Ascending;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + (PropertyName?.GetHashCode() ?? 0);
+                hash = hash * 23 + Ascending.GetHashCode();
+                return hash;
+            }
+        }
     }
 }

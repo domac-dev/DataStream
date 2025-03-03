@@ -55,5 +55,30 @@ namespace DataStream.Models
             _value = value;
             _logicalOperator = logicalOperator;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var other = (PropertyFilterDS)obj;
+            return PropertyName == other.PropertyName &&
+                   Value == other.Value &&
+                   LogicalOperator == other.LogicalOperator &&
+                   OperandType == other.OperandType;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + (PropertyName?.GetHashCode() ?? 0);
+                hash = hash * 23 + (Value?.GetHashCode() ?? 0);
+                hash = hash * 23 + LogicalOperator.GetHashCode();
+                hash = hash * 23 + OperandType.GetHashCode();
+                return hash;
+            }
+        }
     }
 }
