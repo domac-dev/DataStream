@@ -1,4 +1,5 @@
 ﻿using DataStream.Exceptions;
+using DataStream.Models;
 
 namespace DataStream
 {

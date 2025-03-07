@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using DataStream.Models;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace DataStream.Serialization

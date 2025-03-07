@@ -1,4 +1,4 @@
-﻿namespace DataStream
+﻿namespace DataStream.Models
 {
     public enum LogicalOperatorType
     {

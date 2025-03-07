@@ -38,7 +38,7 @@ namespace DataStream
                 ? (ascending ? "OrderBy" : "OrderByDescending")
                 : (ascending ? "ThenBy" : "ThenByDescending");
 
-            MethodCallExpression result = Expression.Call(typeof(Queryable), methodName, [typeof(T), property.Type], 
+            MethodCallExpression result = Expression.Call(typeof(Queryable), methodName, [typeof(T), property.Type],
                 query.Expression, Expression.Quote(lambda));
 
             return query.Provider.CreateQuery<T>(result);
