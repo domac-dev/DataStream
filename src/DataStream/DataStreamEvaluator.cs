@@ -14,10 +14,10 @@ namespace DataStream
         private readonly DataStreamFilter _filter = filter;
 
         /// <summary>
-        /// Evaluates the query by applying filters, sorting, and pagination, returning the resulting IQueryable.
+        /// Evaluates the query by applying filters, sorting, and returning the resulting IQueryable.
         /// </summary>
         /// <returns>An IQueryable with all query operations applied.</returns>
-        public IQueryable<TSource> Evaluate() => _query.Where(BuildExpression()).Sort(_filter.SortFilters).Paginate(_filter.PaginateFilter);
+        public IQueryable<TSource> Evaluate() => _query.Where(BuildExpression()).Sort(_filter.SortFilters);
 
         /// <summary>
         /// Evaluates the query with a projection, applying filters, sorting, and pagination, and returns a paginated response.
