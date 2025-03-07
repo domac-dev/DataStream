@@ -114,39 +114,52 @@ Example of the `DataStreamResponse` response in JSON format:
 
 ```json
 {
-    "pagination": {
-        "currentPage": 1,
-        "pageSize": 5,
-        "totalPages": 4,
-        "totalCount": 18
+  "pagination": {
+    "currentPage": 1,
+    "pageSize": 5,
+    "totalCount": 8,
+    "count": 5,
+    "totalPages": 2,
+    "hasNext": true,
+    "hasPrevious": false,
+    "firstItemIndex": 1,
+    "lastItemIndex": 5,
+    "isFirstPage": true,
+    "isLastPage": false,
+    "hasData": true
+  },
+  "data": [
+    {
+      "Name": "Johanna Harris",
+      "Salary": 57000,
+      "Age": 34,
+      "CompanyName": "TechCorp"
     },
-    "data": [
-        {
-            "name": "John Doe",
-            "salary": 3000,
-            "companyName": "Global Company"
-        },
-        {
-            "name": "Joanna Smith",
-            "salary": 3500,
-            "companyName": "Global Company"
-        },
-        {
-            "name": "Johnny Depp",
-            "salary": 4500,
-            "companyName": "Global Company"
-        },
-        {
-            "name": "Jordan Johnson",
-            "salary": 5000,
-            "companyName": "Global Company"
-        },
-        {
-            "name": "Jodie Turner",
-            "salary": 3200,
-            "companyName": "Global Company"
-        }
-    ]
+    {
+      "Name": "Johnas Brown",
+      "Salary": 60000,
+      "Age": 38,
+      "CompanyName": "TechCorp"
+    },
+    {
+      "Name": "John Carter",
+      "Salary": 55000,
+      "Age": 32,
+      "CompanyName": "TechCorp"
+    },
+    {
+      "Name": "Jonny Moore",
+      "Salary": 49000,
+      "Age": 29,
+      "CompanyName": "TechCorp"
+    },
+    {
+      "Name": "Jori White",
+      "Salary": 63000,
+      "Age": 40,
+      "CompanyName": "TechCorp"
+    }
+  ]
 }
 ```
 
