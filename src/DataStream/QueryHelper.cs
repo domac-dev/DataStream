@@ -26,8 +26,9 @@ namespace DataStream
         private static IQueryable<T> ApplySort<T>(this IQueryable<T> query, string propertyName, bool ascending, bool isFirst)
         {
             ArgumentExceptionDS.ThrowIfNullOrEmpty(propertyName);
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var property = ExpressionHelper.PropertyExpression(parameter, propertyName);
+
+            ParameterExpression? parameter = Expression.Parameter(typeof(T), "x");
+            MemberExpression? property = ExpressionHelper.PropertyExpression(parameter, propertyName);
 
             if (property.Type != typeof(string) && !typeof(IComparable).IsAssignableFrom(property.Type))
                 throw new ArgumentExceptionDS($"Property {propertyName} must implement {nameof(IComparable)}");
@@ -37,12 +38,8 @@ namespace DataStream
                 ? (ascending ? "OrderBy" : "OrderByDescending")
                 : (ascending ? "ThenBy" : "ThenByDescending");
 
-            var result = Expression.Call(
-                typeof(Queryable),
-                methodName,
-                [typeof(T), property.Type],
-                query.Expression,
-                Expression.Quote(lambda));
+            MethodCallExpression result = Expression.Call(typeof(Queryable), methodName, [typeof(T), property.Type], 
+                query.Expression, Expression.Quote(lambda));
 
             return query.Provider.CreateQuery<T>(result);
         }

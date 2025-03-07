@@ -7,8 +7,8 @@ namespace DataStream.Expressions
     {
         public static Expression<Func<TSource, bool>> Build<TSource>(DataStreamFilter filter)
         {
-            var param = Expression.Parameter(typeof(TSource), "x");
-            var expr = CombineExpressions(param, filter.PropertyFilters, filter.SearchFilter);
+            ParameterExpression param = Expression.Parameter(typeof(TSource), "x");
+            Expression? expr = CombineExpressions(param, filter.PropertyFilters, filter.SearchFilter);
             return expr is null ? x => true : Expression.Lambda<Func<TSource, bool>>(expr, param);
         }
 
@@ -16,8 +16,8 @@ namespace DataStream.Expressions
             IEnumerable<PropertyFilterDS>? propertyFilters,
             SearchFilterDS? searchFilter)
         {
-            var propertyExpr = propertyFilters.BuildExpression(param);
-            var searchExpr = searchFilter?.ToPropertyFilters().BuildExpression(param);
+            Expression? propertyExpr = propertyFilters.BuildExpression(param);
+            Expression? searchExpr = searchFilter?.ToPropertyFilters().BuildExpression(param);
 
             return propertyExpr switch
             {
@@ -41,7 +41,7 @@ namespace DataStream.Expressions
 
         private static Expression BuildFilter(this PropertyFilterDS filter, ParameterExpression param)
         {
-            var prop = ExpressionHelper.PropertyExpression(param, filter.PropertyName);
+            MemberExpression prop = ExpressionHelper.PropertyExpression(param, filter.PropertyName);
             OperandValidator.ValidateOperand(filter.OperandType, prop.Type);
             return ExpressionHelper.FilterExpression(prop, filter);
         }

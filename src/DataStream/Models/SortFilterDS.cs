@@ -3,11 +3,24 @@ using System.Text.Json.Serialization;
 
 namespace DataStream.Models
 {
+    /// <summary>
+    /// Specifies a sorting rule for a data query, defining the property to sort by and the sort direction (ascending or descending).
+    /// </summary>
     public class SortFilterDS
     {
+        /// <summary>
+        /// Backing field for the PropertyName property, storing the name of the property to sort.
+        /// </summary>
         private string _propertyName;
+
+        /// <summary>
+        /// Backing field for the Ascending property, storing the sort direction.
+        /// </summary>
         private bool _ascending;
 
+        /// <summary>
+        /// Gets or sets the name of the property to sort by (e.g., "Name", "Salary"). Cannot be null or empty.
+        /// </summary>
         [JsonPropertyName("property")]
         public string PropertyName
         {
@@ -17,6 +30,9 @@ namespace DataStream.Models
                 : value;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the sort is ascending (true) or descending (false).
+        /// </summary>
         [JsonPropertyName("ascending")]
         public bool Ascending
         {
@@ -24,6 +40,11 @@ namespace DataStream.Models
             set => _ascending = value;
         }
 
+        /// <summary>
+        /// Initializes a new instance of SortFilterDS with the specified property name and sort direction.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to sort by.</param>
+        /// <param name="ascending">True for ascending order, false for descending. Defaults to true.</param>
         public SortFilterDS(string propertyName, bool ascending = true)
         {
             ArgumentExceptionDS.ThrowIfNullOrEmpty(propertyName);
