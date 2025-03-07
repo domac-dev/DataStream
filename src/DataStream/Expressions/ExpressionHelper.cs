@@ -27,11 +27,7 @@ namespace DataStream.Expressions
                 _ => throw new ArgumentExceptionDS($"Unsupported operand: {filter.OperandType}")
             };
 
-        public static ConstantExpression Constant(Type type, string value)
-        {
-            ConstantExpression? constant = TypeParser.TryParse(type, value, out var parsed) ? Expression.Constant(parsed, type);
-            return constant ?? throw new ArgumentExceptionDS($"Cannot parse '{value}' to {type.Name}");
-        }
-            
+        public static ConstantExpression Constant(Type type, string value) => TypeParser.TryParse(type, value, out var parsed) ? 
+            Expression.Constant(parsed, type) : throw new ArgumentExceptionDS($"Cannot parse '{value}' to {type.Name}");
     }
 }
