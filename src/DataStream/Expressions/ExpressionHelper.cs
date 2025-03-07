@@ -6,9 +6,11 @@ namespace DataStream.Expressions
 {
     internal static class ExpressionHelper
     {
-        public static MemberExpression PropertyExpression(ParameterExpression param, string propertyName) =>
-            propertyName.Split('.').Aggregate((Expression)param, Expression.PropertyOrField) as MemberExpression
-            ?? throw new ArgumentExceptionDS($"Invalid property path: {propertyName}");
+        public static MemberExpression PropertyExpression(ParameterExpression param, string propertyName)
+        {
+            MemberExpression? propertyExpression = propertyName.Split('.').Aggregate((Expression)param, Expression.PropertyOrField) as MemberExpression;           
+            return propertyExpression ?? throw new ArgumentExceptionDS($"Invalid property path: {propertyName}");
+        }
 
         public static Expression FilterExpression(MemberExpression prop, PropertyFilterDS filter) =>
             filter.OperandType switch
@@ -25,9 +27,11 @@ namespace DataStream.Expressions
                 _ => throw new ArgumentExceptionDS($"Unsupported operand: {filter.OperandType}")
             };
 
-        public static ConstantExpression Constant(Type type, string value) =>
-            TypeParser.TryParse(type, value, out var parsed)
-                ? Expression.Constant(parsed, type)
-                : throw new ArgumentExceptionDS($"Cannot parse '{value}' to {type.Name}");
+        public static ConstantExpression Constant(Type type, string value)
+        {
+            ConstantExpression? constant = TypeParser.TryParse(type, value, out var parsed) ? Expression.Constant(parsed, type);
+            return constant ?? throw new ArgumentExceptionDS($"Cannot parse '{value}' to {type.Name}");
+        }
+            
     }
 }

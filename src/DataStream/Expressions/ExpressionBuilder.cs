@@ -12,9 +12,7 @@ namespace DataStream.Expressions
             return expr is null ? x => true : Expression.Lambda<Func<TSource, bool>>(expr, param);
         }
 
-        private static Expression? CombineExpressions(ParameterExpression param,
-            IEnumerable<PropertyFilterDS>? propertyFilters,
-            SearchFilterDS? searchFilter)
+        private static Expression? CombineExpressions(ParameterExpression param, IEnumerable<PropertyFilterDS>? propertyFilters, SearchFilterDS? searchFilter)
         {
             Expression? propertyExpr = propertyFilters.BuildExpression(param);
             Expression? searchExpr = searchFilter?.ToPropertyFilters().BuildExpression(param);
