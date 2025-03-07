@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace DataStream
 {
     public static class DataStreamExtensions
-    {        
+    {
         public static DataStreamResponse<TTarget> Evaluate<TTarget, TSource>(this IQueryable<TSource> query, DataStreamFilter filter,
             Expression<Func<TSource, TTarget>> expression)
         {

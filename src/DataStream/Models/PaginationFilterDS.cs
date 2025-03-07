@@ -1,6 +1,5 @@
 ﻿using DataStream.Configuration;
 using System.Text.Json.Serialization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DataStream.Models
 {

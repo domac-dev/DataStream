@@ -37,6 +37,8 @@ namespace DataStream.Models
             Init();
         }
 
+        public bool IsEmpty() => PropertyFilters.Count != 0 != true && SearchFilter is null;
+
         private void Init()
         {
             foreach (var filter in _options.SortFilters)
