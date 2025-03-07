@@ -10,8 +10,8 @@ namespace DataStream
 
         public DataStreamResponse<TTarget> Evaluate<TTarget>(Expression<Func<TSource, TTarget>> projection)
         {
-            var filteredQuery = query.Where(BuildExpression()).Sort(filter.SortFilters);
-            var paginatedData = filteredQuery.Paginate(filter.PaginateFilter).Select(projection);
+            IQueryable<TSource> filteredQuery = query.Where(BuildExpression()).Sort(filter.SortFilters);
+            IQueryable<TTarget> paginatedData = filteredQuery.Paginate(filter.PaginateFilter).Select(projection);
             return new DataStreamResponse<TTarget>(paginatedData, filteredQuery.GetPaginationInfo(filter.PaginateFilter));
         }
 
