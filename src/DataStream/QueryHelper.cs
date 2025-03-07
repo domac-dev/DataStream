@@ -7,10 +7,23 @@ namespace DataStream
 {
     internal static class QueryHelper
     {
-        internal static IQueryable<T> Sort<T>(this IQueryable<T> query, HashSet<SortFilterDS> sortFilters) =>
-            sortFilters.Aggregate(query, (currentQuery, filter) => currentQuery.OrderBy(filter.PropertyName, filter.Ascending));
+        internal static IQueryable<T> Sort<T>(this IQueryable<T> query, HashSet<SortFilterDS> sortFilters)
+        {
+            if (sortFilters == null || sortFilters.Count == 0) return query;
 
-        internal static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName, bool ascending)
+            IQueryable<T> sortedQuery = query;
+            bool isFirst = true;
+
+            foreach (var filter in sortFilters)
+            {
+                sortedQuery = sortedQuery.ApplySort(filter.PropertyName, filter.Ascending, isFirst);
+                isFirst = false;
+            }
+
+            return sortedQuery;
+        }
+
+        private static IQueryable<T> ApplySort<T>(this IQueryable<T> query, string propertyName, bool ascending, bool isFirst)
         {
             ArgumentExceptionDS.ThrowIfNullOrEmpty(propertyName);
             var parameter = Expression.Parameter(typeof(T), "x");
@@ -20,7 +33,10 @@ namespace DataStream
                 throw new ArgumentExceptionDS($"Property {propertyName} must implement {nameof(IComparable)}");
 
             var lambda = Expression.Lambda(property, parameter);
-            var methodName = ascending ? "OrderBy" : "OrderByDescending";
+            string methodName = isFirst
+                ? (ascending ? "OrderBy" : "OrderByDescending")
+                : (ascending ? "ThenBy" : "ThenByDescending");
+
             var result = Expression.Call(
                 typeof(Queryable),
                 methodName,

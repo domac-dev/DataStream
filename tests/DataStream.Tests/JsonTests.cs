@@ -185,6 +185,56 @@ namespace DataStream.Tests
                 e.CompanyName.Contains("son", StringComparison.OrdinalIgnoreCase) ||
                 e.CompanyAddress.Contains("son", StringComparison.OrdinalIgnoreCase)));
             Assert.True(result.Data.Count() <= 10, "Pagination should limit to 10 rows.");
-        }       
+        }
+
+        [Fact]
+        public void QGrid_JSON_Test_MultipleSorts_ShouldReturnCorrectResults()
+        {
+            string json = @"{
+                ""filters"": [
+                    { ""property"": ""IsActive"", ""value"": ""true"", ""operand"": ""eq"", ""operator"": ""and"" }
+                ],
+                ""sort"": [
+                    { ""property"": ""Company.Name"", ""ascending"": true },
+                    { ""property"": ""Salary"", ""ascending"": false },
+                    { ""property"": ""Age"", ""ascending"": true }
+                ]
+            }";
+
+            var query = _context.Employees.AsQueryable();
+            Utf8JsonReader reader = new Utf8JsonReader(System.Text.Encoding.UTF8.GetBytes(json));
+            DataStreamFilter filter = JsonSerializer.Deserialize<DataStreamFilter>(ref reader)!;
+
+            DataStreamEvaluator<Employee> builder = new(query, filter);
+            DataStreamResponse<EmployeeDTO> result = builder.Evaluate(employee => new EmployeeDTO
+            {
+                Name = employee.Name,
+                Salary = employee.Salary,
+                Age = employee.Age,
+                CompanyName = employee.Company.Name,
+                CompanyAddress = employee.Company.Address.Street,
+                CompanyAverageSalary = employee.Company.Employees.Average(e => e.Salary),
+                CompanyEmployeesCount = employee.Company.Employees.Count(),
+                IsActive = true
+            });
+
+            Assert.All(result.Data, e => Assert.True(e.IsActive));
+            var sortedData = result.Data.ToList();
+            for (int i = 0; i < sortedData.Count - 1; i++)
+            {
+                var a = sortedData[i];
+                var b = sortedData[i + 1];
+                int companyCompare = string.Compare(a.CompanyName, b.CompanyName, StringComparison.Ordinal);
+                Assert.True(companyCompare <= 0, $"CompanyName not sorted ascending at {i}: {a.CompanyName} vs {b.CompanyName}");
+                if (companyCompare == 0)
+                {
+                    Assert.True(a.Salary >= b.Salary, $"Salary not sorted descending at {i}: {a.Salary} vs {b.Salary}");
+                    if (a.Salary == b.Salary)
+                    {
+                        Assert.True(a.Age <= b.Age, $"Age not sorted ascending at {i}: {a.Age} vs {b.Age}");
+                    }
+                }
+            }
+        }
     }
 }
