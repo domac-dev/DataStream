@@ -53,7 +53,8 @@ namespace DataStream
             int totalCount = query.Count();
             int rows = Math.Max(filter.Rows, 0);
             int page = Math.Max(filter.Page, 1);
-            return new(page, rows, totalCount, query.Skip((page - 1) * rows).Take(rows).Count());
+            int count = query.Skip((page - 1) * rows).Take(rows).Count();
+            return new DataStreamPagination(page, rows, totalCount, count);
         }
 
         internal static IQueryable<T> Paginate<T>(this IQueryable<T> query, PaginationFilterDS? filter) =>
