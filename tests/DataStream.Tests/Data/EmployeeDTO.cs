@@ -10,5 +10,7 @@
         public double CompanyAverageSalary { get; set; }
         public int CompanyEmployeesCount { get; set; }
         public DateTime JoinDate { get; set; }
+
+        public bool IsActive {  get; set; }
     }
 }
